@@ -35,15 +35,22 @@ def main():
     session = argoscuolanext.Session(
         credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
 
-    what_view = input("cosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, ... ").lower()
+    what_view = input("cosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, [DEBUG: (VR) voti_raw]... ").lower()
     print()
     if what_view == 'v':
         voti_raw = session.votigiornalieri()
         # print(voti_raw["dati"][1]["desMateria"])
         for x in voti_raw["dati"]:
             print(x["datGiorno"], x["desMateria"].lower(), ": ", x["codVoto"])
+    elif what_view == 'vr':
+        voti_raw = session.votigiornalieri()
+        pp.pprint(voti_raw)
 
     # pp.pprint(session.votigiornalieri())
+
+    elif what_view == 'o':
+        cosa_successo = session.oggi()
+        pp.pprint(cosa_successo)
 
 
 if __name__ == '__main__':
