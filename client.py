@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import argoscuolanext  # to install it run "pip3 install --user argoscuolanext"
 import pickle
 import json
@@ -17,7 +18,7 @@ def main():
 
         new_cred = input("file con credenziali non trovato, crearne di nuove? y/N ")
 
-        if new_cred.lower() == "y":
+        if new_cred.lower() == 'y':
             credenziali = {}
             credenziali["CODICE_SCUOLA"] = input("codice scuola: ")
             credenziali["USERNAME"] = input("nome utente: ")
@@ -34,11 +35,23 @@ def main():
     session = argoscuolanext.Session(
         credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
 
-    pp.pprint(session.votigiornalieri())
-    #voti_json = json.loads(str(session.votigiornalieri()))
-    # print(voti_json)
-    #print(json.dumps(voti_json, indent=4, sort_keys=True))
+    what_view = input("cosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, ... ").lower()
+    print()
+    if what_view == 'v':
+        voti_raw = session.votigiornalieri()
+        # print(voti_raw["dati"][1]["desMateria"])
+        for x in voti_raw["dati"]:
+            print(x["datGiorno"], x["desMateria"].lower(), ": ", x["codVoto"])
+
+    # pp.pprint(session.votigiornalieri())
 
 
 if __name__ == '__main__':
     main()
+
+
+"""
+codVotoPratico: -N orale
+                -S scritto
+                -P pratico
+"""
