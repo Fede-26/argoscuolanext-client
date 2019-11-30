@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import re
-import argoscuolanext  # to install it run "pip3 install --user argoscuolanext"
+import argoscuolanext as argo
 import pickle
 import json
 import pprint
@@ -8,69 +8,70 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 def voti(dict):
-    # print(voti_raw["dati"][1]["desMateria"])
-    for x in dict["dati"]:
+	for x in dict["dati"]:
 
-        if x["codVotoPratico"] == 'N':
-            voto_pratico = "orale"
-        elif x["codVotoPratico"] == 'S':
-            voto_pratico = "scritto"
-        elif x["codVotoPratico"] == 'P':
-            voto_pratico = "pratico"
+		if x["codVotoPratico"] == 'N':
+			voto_pratico = "orale"
+		elif x["codVotoPratico"] == 'S':
+			voto_pratico = "scritto"
+		elif x["codVotoPratico"] == 'P':
+			voto_pratico = "pratico"
 
-        print(x["datGiorno"], x["desMateria"].lower(), ": ", x["codVoto"], " - ", voto_pratico)
+		print(x["datGiorno"], (x["desMateria"].lower()).capitalize(), ": ", x["codVoto"], " - ", voto_pratico, " (", x["desProva"], ")\n")
 
+
+def cosa_successo_oggi(dict):
+	for x in dict["dati"]:
+		print(x["dati"]["desMateria"], ": ", x["dati"]["desArgomento"], "\n")        
 
 
 def main():
 
-    try:
+	try:
 
-        with open('credenziali.pickle', 'rb') as handle:
-            credenziali = pickle.load(handle)
+		with open('credenziali.pickle', 'rb') as handle:
+			credenziali = pickle.load(handle)
 
-    except FileNotFoundError:
+	except FileNotFoundError:
 
-        new_cred = input("file con credenziali non trovato, crearne di nuove? y/N ")
+		make_new_cred = input("file con credenziali non trovato, crearne di nuove? y/N ")
 
-        if new_cred.lower() == 'y':
-            credenziali = {}
-            credenziali["CODICE_SCUOLA"] = input("codice scuola: ")
-            credenziali["USERNAME"] = input("nome utente: ")
-            credenziali["PASSWORD"] = input("password: ")
-            print("--ATTENZIONE: dati salvati nel file credenziali.pickle, non dare a nessuno questo file e non cancellarlo, altrimenti dovrai reimpostare le credenziali")
+		credenziali = {}
+		credenziali["CODICE_SCUOLA"] = input("codice scuola: ")
+		credenziali["USERNAME"] = input("nome utente: ")
+		credenziali["PASSWORD"] = input("password: ")
 
-            with open('credenziali.pickle', 'wb') as handle:
-                pickle.dump(credenziali, handle)
+		if make_new_cred.lower() == 'y':
+			print("--ATTENZIONE: dati salvati nel file credenziali.pickle, non dare a nessuno questo file e non cancellarlo, altrimenti dovrai reimpostare le credenziali")
 
-        else:
-            print("USCITA DAL PROGRAMMA")
-            quit()
+			with open('credenziali.pickle', 'wb') as handle:
+				pickle.dump(credenziali, handle)
 
-    session = argoscuolanext.Session(
-        credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
+	session = argo.Session(credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
 
-    what_view = input("cosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, [DEBUG: (VR) voti_raw]... ").lower()
-    print()
+	while 1:
 
-    if what_view == 'v':
-        voti(session.votigiornalieri())
+		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (o)ggi, (99)exit, [DEBUG: add R for raw output]... ").lower()
+		print()
 
-    if what_view == 'vr':
-        voti_raw = session.votigiornalieri()
-        pp.pprint(voti_raw)
+		if what_view == 'v':
+			voti(session.votigiornalieri())
 
-    elif what_view == 'o':
-        cosa_successo = session.oggi()
-        pp.pprint(cosa_successo)
+		elif what_view == 'vr':
+			voti_raw = session.votigiornalieri()
+			pp.pprint(voti_raw)
+
+		elif what_view == 'o':
+			oggi_raw = session.oggi()
+			cosa_successo_oggi(oggi_raw)
+
+		elif what_view == 'or':
+			oggi_raw = session.oggi()
+			pp.pprint(oggi_raw)
+
+		elif what_view == '99':
+			exit()
 
 
 if __name__ == '__main__':
     main()
-
-
-"""
-codVotoPratico: -N orale
-                -S scritto
-                -P pratico
-"""
