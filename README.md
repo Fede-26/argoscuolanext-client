@@ -1,6 +1,9 @@
 argoscuolanext client
 
-# Non mi assumo nessuna responsabilità per ciascun utilizzo di questo programma, la società argo scuola non permette l'utilizzo del token per software non autorizzati.
+# DISCLAIMER
+### Non mi assumo nessuna responsabilità per ciascun utilizzo di questo programma
+
+Il token di autenticazione e i servizi restful invocati mediante esso, possono essere utilizzati solo dall'applicazione "DidUP - Famiglia" della Argo Software SRL per l’erogazione dei propri servizi o da fornitori saas e relative applicazioni appositamente preautorizzate, in conformità alla vigente normativa in maniera di protezione dei dati personali ed alle misure richieste dall’AgID per gli applicativi SaaS delle PA.
 
 ## Per installarlo
 
