@@ -7,6 +7,21 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 
+def voti(dict):
+    # print(voti_raw["dati"][1]["desMateria"])
+    for x in dict["dati"]:
+
+        if x["codVotoPratico"] == 'N':
+            voto_pratico = "orale"
+        elif x["codVotoPratico"] == 'S':
+            voto_pratico = "scritto"
+        elif x["codVotoPratico"] == 'P':
+            voto_pratico = "pratico"
+
+        print(x["datGiorno"], x["desMateria"].lower(), ": ", x["codVoto"], " - ", voto_pratico)
+
+
+
 def main():
 
     try:
@@ -37,16 +52,13 @@ def main():
 
     what_view = input("cosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, [DEBUG: (VR) voti_raw]... ").lower()
     print()
+
     if what_view == 'v':
-        voti_raw = session.votigiornalieri()
-        # print(voti_raw["dati"][1]["desMateria"])
-        for x in voti_raw["dati"]:
-            print(x["datGiorno"], x["desMateria"].lower(), ": ", x["codVoto"])
-    elif what_view == 'vr':
+        voti(session.votigiornalieri())
+
+    if what_view == 'vr':
         voti_raw = session.votigiornalieri()
         pp.pprint(voti_raw)
-
-    # pp.pprint(session.votigiornalieri())
 
     elif what_view == 'o':
         cosa_successo = session.oggi()
