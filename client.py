@@ -25,6 +25,19 @@ def cosa_successo_oggi(dict):
 		print(x["dati"]["desMateria"], ": ", x["dati"]["desArgomento"], "\n")        
 
 
+def compiti_assegnati(dict):
+	data = input("Data di assegnamento compiti (mm-gg): ")
+	data = '2019-' + data
+	print()
+	for x in dict["dati"]:
+		if x["datGiorno"] == data:
+			if x["datCompitiPresente"]:
+				data_consegna = "per il " + x["datCompiti"]
+			else:
+				data_consegna = ''
+			print( x["datGiorno"], data_consegna, "-", (x["desMateria"].lower()).capitalize(), ": ", x["desCompiti"], "\n")
+
+
 def main():
 
 	try:
@@ -51,7 +64,7 @@ def main():
 
 	while 1:
 
-		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (o)ggi, (99)exit, [DEBUG: add R for raw output]... ").lower()
+		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (o)ggi, (C)ompiti, (99)exit, [DEBUG: add R for raw output]... ").lower()
 		print()
 
 		if what_view == 'v':
@@ -68,6 +81,14 @@ def main():
 		elif what_view == 'or':
 			oggi_raw = session.oggi()
 			pp.pprint(oggi_raw)
+
+		elif what_view == 'c':
+			compiti_raw = session.compiti()
+			compiti_assegnati(compiti_raw)
+
+		elif what_view == 'cr':
+			compiti_raw = session.compiti()
+			pp.pprint(compiti_raw)
 
 		elif what_view == '99':
 			exit()
