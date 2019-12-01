@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-import re
+import datetime
 import argoscuolanext as argo
 import pickle
-import json
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 
-def voti(dict):
-	for x in dict["dati"]:
+def voti(raw):
+	for x in raw["dati"]:
 
 		if x["codVotoPratico"] == 'N':
 			voto_pratico = "orale"
@@ -20,22 +19,36 @@ def voti(dict):
 		print(x["datGiorno"], (x["desMateria"].lower()).capitalize(), ": ", x["codVoto"], " - ", voto_pratico, " (", x["desProva"], ")\n")
 
 
-def cosa_successo_oggi(dict):
-	for x in dict["dati"]:
-		print(x["dati"]["desMateria"], ": ", x["dati"]["desArgomento"], "\n")        
+def cosa_successo_oggi(raw):
+	for x in raw["dati"]:
+		print(x["dati"]["desMateria"], ": ", x["dati"]["desArgomento"], "\n")
 
 
-def compiti_assegnati(dict):
+def compiti_asse_data(raw):
 	data = input("Data di assegnamento compiti (mm-gg): ")
 	data = '2019-' + data
 	print()
-	for x in dict["dati"]:
+	for x in raw["dati"]:
 		if x["datGiorno"] == data:
 			if x["datCompitiPresente"]:
 				data_consegna = "per il " + x["datCompiti"]
 			else:
 				data_consegna = ''
 			print( x["datGiorno"], data_consegna, "-", (x["desMateria"].lower()).capitalize(), ": ", x["desCompiti"], "\n")
+
+
+def compiti_asse_sett(raw):
+	oggi = datetime.date.today()
+	settimana = []
+	for i in range(7):
+		settimana.append(oggi - datetime.timedelta(days=i))
+
+	for data in settimana:
+		for x in raw["dati"]:
+			#print(data)
+			#print(x["datGiorno"])
+			if x["datGiorno"] == str(data):
+				print( x["datGiorno"], "-", (x["desMateria"].lower()).capitalize(), ": ", x["desCompiti"], "\n")
 
 
 def main():
@@ -64,7 +77,7 @@ def main():
 
 	while 1:
 
-		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (o)ggi, (C)ompiti, (99)exit, [DEBUG: add R for raw output]... ").lower()
+		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, (C)ompiti, (CS)compiti sett. scorsa (99)exit, [DEBUG: add R for raw output]... ").lower()
 		print()
 
 		if what_view == 'v':
@@ -84,11 +97,15 @@ def main():
 
 		elif what_view == 'c':
 			compiti_raw = session.compiti()
-			compiti_assegnati(compiti_raw)
+			compiti_asse_data(compiti_raw)
 
 		elif what_view == 'cr':
 			compiti_raw = session.compiti()
 			pp.pprint(compiti_raw)
+
+		elif what_view == 'cs':
+			compiti_raw = session.compiti()
+			compiti_asse_sett(compiti_raw)
 
 		elif what_view == '99':
 			exit()
