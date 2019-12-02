@@ -1,5 +1,3 @@
-argoscuolanext client
-
 # DISCLAIMER
 ### Non mi assumo nessuna responsabilità per ciascun utilizzo di questo programma
 
@@ -7,12 +5,10 @@ Il token di autenticazione e i servizi restful invocati mediante esso, possono e
 
 ## Per installarlo
 
-Digitare "pip3 install --user -r requirements.txt"
+`Digitare "pip3 install --user -r requirements.txt"`
 
 ## Per utilizzarlo
 
-Digitare "python3 client.py"
+`Digitare "python3 client.py"`
 
-## Se non dovesse funzionare
-
-Utilizzare pip al posto di pip3 e python al posto di python3
+### Questo programma è stato reso possibile da: [hearot/ArgoScuolaNext-Python](https://github.com/hearot/ArgoScuolaNext-Python)
