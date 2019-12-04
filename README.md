@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/fede-26/argoscuolanext-client/badge)](https://www.codefactor.io/repository/github/fede-26/argoscuolanext-client)
+
 # DISCLAIMER
 ### Non mi assumo nessuna responsabilità per ciascun utilizzo di questo programma
 
