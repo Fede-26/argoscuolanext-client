@@ -19,24 +19,24 @@
 
 	<table border=1>
 		{% for x in raw["dati"] %}
-			{% if x["datGiorno"] == data %}
-			<tr>
-				<td>
-					{{ x["datGiorno"] }}
-				</td>
-				<td>
-					{% if x["datCompitiPresente"] %}
-					per il {{ x["datCompiti"] }}
-					{% endif %}
-				</td>
-				<td>
-					{{ x["desMateria"].lower().capitalize() }}
-				</td>
-				<td>
-					{{ x["desCompiti"] }}
-				</td>
-			</tr>
-			{% endif %}
+		{% if x["datGiorno"] == data %}
+		<tr>
+			<td>
+				{{ x["datGiorno"] }}
+			</td>
+			<td>
+				{% if x["datCompitiPresente"] %}
+				per il {{ x["datCompiti"] }}
+				{% endif %}
+			</td>
+			<td>
+				{{ x["desMateria"].lower().capitalize() }}
+			</td>
+			<td>
+				{{ x["desCompiti"] }}
+			</td>
+		</tr>
+		{% endif %}
 		{% endfor %}
 	</table>
 </body>
