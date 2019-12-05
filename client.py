@@ -7,7 +7,7 @@ pp = pprint.PrettyPrinter(indent=4)
 
 paths = {
 	"credenziali": "credenziali.pickle",
-	"data": "data.pickle"
+	"dati": "dati.pickle"
 }
 
 
@@ -31,34 +31,34 @@ def get_credentials():
 	return cred
 
 
-def get_data():
+def get_dati():
 	try:
-		with open(paths["data"], 'rb') as handle:
-			all_data = pickle.load(handle)
-		return all_data[0], all_data[1], all_data[2]
+		with open(paths["dati"], 'rb') as handle:
+			all_dati = pickle.load(handle)
+		return all_dati[0], all_dati[1], all_dati[2]
 
 	except FileNotFoundError:
-		update_data()
-		return get_data()
+		update_dati()
+		return get_dati()
 
 
-def update_data():
+def update_dati():
 
 	credenziali = get_credentials()
 
 	session = argo.Session(credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
 
-	all_data = [
+	all_dati = [
 		session.oggi(),
 		session.votigiornalieri(),
 		session.compiti()
 	]
 
-	with open(paths["data"], 'wb') as handle:
-		pickle.dump(all_data, handle)
+	with open(paths["dati"], 'wb') as handle:
+		pickle.dump(all_dati, handle)
 
 
-def voti(raw):
+def voti(raw):		#tutti i voti assegnati
 	for x in reversed(raw["dati"]):
 		if x["codVotoPratico"] == 'N':
 			voto_pratico = "orale"
@@ -78,7 +78,7 @@ def cosa_successo_oggi(raw):
 			pass
 
 
-def compiti_asse_data(raw):
+def compiti_asse_data(raw):		#compiti assegnati una determinata data
 	data = input("Data di assegnamento compiti (mm-gg): ")
 	data = '2019-' + data
 	print()
@@ -92,7 +92,7 @@ def compiti_asse_data(raw):
 			print(x["datGiorno"], data_consegna, "-", (x["desMateria"].lower()).capitalize(), ": ", x["desCompiti"], "\n")
 
 
-def compiti_asse_sett(raw):
+def compiti_asse_sett(raw):		#compiti assegnati fino a 7 giorni prima
 	oggi = datetime.date.today()
 	settimana = []
 	for i in range(7):
@@ -107,7 +107,7 @@ def compiti_asse_sett(raw):
 
 
 def main():
-	data_oggi, data_voti, data_compiti = get_data()
+	dati_oggi, dati_voti, dati_compiti = get_dati()
 	looping = False
 
 	while 1:
@@ -115,35 +115,35 @@ def main():
 		print()
 
 		if what_view == 'v':
-			voti(data_voti)
+			voti(dati_voti)
 
 		elif what_view == 'vr':
-			voti_raw = data_voti
+			voti_raw = dati_voti
 			pp.pprint(voti_raw)
 
 		elif what_view == 'o':
-			oggi_raw = data_oggi
+			oggi_raw = dati_oggi
 			cosa_successo_oggi(oggi_raw)
 
 		elif what_view == 'or':
-			oggi_raw = data_oggi
+			oggi_raw = dati_oggi
 			pp.pprint(oggi_raw)
 
 		elif what_view == 'c':
-			compiti_raw = data_compiti
-			compiti_asse_data(compiti_raw)
+			compiti_raw = dati_compiti
+			compiti_asse_dati(compiti_raw)
 
 		elif what_view == 'cr':
-			compiti_raw = data_compiti
+			compiti_raw = dati_compiti
 			pp.pprint(compiti_raw)
 
 		elif what_view == 'cs':
-			compiti_raw = data_compiti
+			compiti_raw = dati_compiti
 			compiti_asse_sett(compiti_raw)
 
 		elif what_view == 'up':
-			update_data()
-			get_data()
+			update_dati()
+			get_dati()
 
 		elif what_view == '99':
 			exit()
