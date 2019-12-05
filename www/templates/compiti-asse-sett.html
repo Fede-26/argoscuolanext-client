@@ -3,21 +3,21 @@
 
 <head>
 	<meta charset="UTF-8">
-
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'base.css') }}">
 	<title>REGISTRO - compiti settimana</title>
 </head>
 
 <body>
-	<big>COMPITI ASSEGNATI LA SETTIMANA SCORSA</big>
+	<big>COMPITI ASSEGNATI LA SETTIMANA SCORSA</big><br>
 
-	<br>
-	<a href="../voti" target="_self">voti</a>
-	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a>
-	<a href="../data-prompt" target="_self">compiti assegnati una data</a>
-	<a href="../update" target="_self">update</a>
-	<br>
+	<links><br>
+	<a href="../voti" target="_self">voti</a><br>
+	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a><br>
+	<a href="../data-prompt" target="_self">compiti assegnati una data</a><br>
+	<a href="../update" target="_self">update</a><br>
+	</links>
 
-	<table border=1>
+	<table>
 		{% for data in giorni %}
 		{% for x in raw["dati"] %}
 		{% if x["datGiorno"] == data %}
