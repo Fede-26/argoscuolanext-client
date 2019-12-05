@@ -87,17 +87,15 @@ def page_compiti_asse_sett():
 
 @app.route('/compiti-asse-data/<data_assegnati>/')
 def page_compiti_asse_data(data_assegnati):
-	data_assegnati = '2019-' + data_assegnati
 	return render_template('compiti-asse-data.html', raw = dati_compiti, data = data_assegnati)
 
 
-#@app.route('/data-prompt/', methods = ['POST', 'GET'])
-#def page_data_prompt():
-#	if request.method == 'POST':
-#		data_assegnati = (request.form).items()
-#		print(data_assegnati)
-#		return redirect(url_for(page_compiti_asse_data(data_assegnati)))
-#	return render_template('data-prompt.html')
+@app.route('/data-prompt/', methods = ['POST', 'GET'])
+def page_data_prompt():
+	if request.method == 'POST':
+		data_assegnati = request.form["data_assegnati"]
+		return redirect('../compiti-asse-data/' + data_assegnati)
+	return render_template('data-prompt.html')
 
 
 @app.route('/update/')
@@ -107,4 +105,4 @@ def page_update():
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)
