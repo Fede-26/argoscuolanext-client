@@ -1,0 +1,16 @@
+body {
+	background-color: #f4f0e3;
+}
+
+table {
+	border: 1px solid black;
+}
+
+th, td {
+	padding: 7px;
+	border-bottom: 1px solid darkgrey;
+}
+
+links {
+	margin: 10px;
+}

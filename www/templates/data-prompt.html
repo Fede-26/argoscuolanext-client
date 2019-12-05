@@ -3,22 +3,22 @@
 
 <head>
 	<meta charset="UTF-8">
-
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'base.css') }}">
 	<title>REGISTRO - compiti settimana</title>
 </head>
 
 <body>
-	<big>COMPITI ASSEGNATI UNA DATA</big>
+	<big>COMPITI ASSEGNATI UNA DATA</big><br>
 
-	<br>
-	<a href="../voti" target="_self">voti</a>
-	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a>
-	<a href="../compiti-asse-sett" target="_self">compiti ass. la sett. scorsa</a>
-	<a href="../update" target="_self">update</a>
-	<br>
+	<links><br>
+	<a href="../voti" target="_self">voti</a><br>
+	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a><br>
+	<a href="../compiti-asse-sett" target="_self">compiti ass. la sett. scorsa</a><br>
+	<a href="../update" target="_self">update</a><br>
+	</links>
 
 	<form action="http://127.0.0.1:5000/data-prompt/" method="POST">
-		<p>Data <input type="text" name="data_assegnati" /></p>
+		<p>Data <input type="date" name="data_assegnati" /></p>
 		<p><input type="submit" value="submit" /></p>
 	</form>
 

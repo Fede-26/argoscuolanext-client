@@ -3,21 +3,21 @@
 
 <head>
 	<meta charset="UTF-8">
-
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'base.css') }}">
 	<title>REGISTRO - oggi</title>
 </head>
 
 <body>
-	<big>COSA È SUCCESSO OGGI</big>
+	<big>COSA È SUCCESSO OGGI</big><br>
 
-	<br>
-	<a href="../../voti" target="_self">voti</a>
-	<a href="../../compiti-asse-sett" target="_self">compiti assegnati la sett. scorsa</a>
-	<a href="../../data-prompt" target="_self">compiti assegnati una data</a>
-	<a href="../../update" target="_self">update</a>
-	<br>
+	<links><br>
+	<a href="../../voti" target="_self">voti</a><br>
+	<a href="../../compiti-asse-sett" target="_self">compiti assegnati la sett. scorsa</a><br>
+	<a href="../../data-prompt" target="_self">compiti assegnati una data</a><br>
+	<a href="../../update" target="_self">update</a><br>
+	</links>
 
-	<table border=1>
+	<table>
 		{% for x in raw["dati"] %}
 		<tr>
 			{% if x["titolo"] == "Argomenti lezione" %}
