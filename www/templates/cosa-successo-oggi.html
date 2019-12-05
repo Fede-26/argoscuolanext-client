@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>REGISTRO - oggi</title>
+</head>
+
+<body>
+	<big>COSA È SUCCESSO OGGI</big>
+
+	<br>
+	<a href="../../voti" target="_self">voti</a>
+	<a href="../../compiti-asse-sett" target="_self">compiti assegnati la sett. scorsa</a>
+	<a href="../../data-prompt" target="_self">compiti assegnati una data</a>
+	<a href="../../update" target="_self">update</a>
+	<br>
+
+	<table border=1>
+		{% for x in raw["dati"] %}
+		<tr>
+			{% if x["titolo"] == "Argomenti lezione" %}
+			<td>
+				{{ x["dati"]["desMateria"].lower().capitalize() }}
+			</td>
+			<td>
+				{% if "desArgomento" in x["dati"] %}
+				{{ x["dati"]["desArgomento"] }}
+				{% endif %}
+			</td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+
+</html>
