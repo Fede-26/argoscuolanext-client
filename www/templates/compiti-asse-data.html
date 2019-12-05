@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>REGISTRO - compiti settimana</title>
+</head>
+
+<body>
+	<big>COMPITI ASSEGNATI IL {{ data }}</big>
+
+	<br>
+	<a href="../../voti" target="_self">voti</a>
+	<a href="../../cosa-successo-oggi" target="_self">cosa è successo oggi</a>
+	<a href="../../compiti-asse-sett" target="_self">compiti ass. la sett. scorsa</a>
+	<a href="../../update" target="_self">update</a>
+	<br>
+
+	<table border=1>
+		{% for x in raw["dati"] %}
+		{% if x["datGiorno"] == data %}
+		<tr>
+			<td>
+				{{ x["datGiorno"] }}
+			</td>
+			<td>
+				{% if x["datCompitiPresente"] %}
+				per il {{ x["datCompiti"] }}
+				{% endif %}
+			</td>
+			<td>
+				{{ x["desMateria"].lower().capitalize() }}
+			</td>
+			<td>
+				{{ x["desCompiti"] }}
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</table>
+</body>
+
+</html>

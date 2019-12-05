@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>REGISTRO - voti</title>
+</head>
+
+<body>
+	<big>VOTI</big>
+
+	<br>
+	<a href="../cosa_successo-oggi" target="_self">cosa è successo oggi</a>
+	<a href="../compiti-asse-sett" target="_self">compiti assegnati la sett. scorsa</a>
+	<a href="../data-prompt" target="_self">compiti assegnati una data</a>
+	<a href="../update" target="_self">update</a>
+
+	<br>
+	<table border=1>
+		{% for x in raw["dati"] %}
+		<tr>
+			<td>
+				{{ x["datGiorno"] }}
+			</td>
+			<td>
+				{{ x["desMateria"].lower().capitalize() }}
+			</td>
+			<td>
+				{{ x["codVoto"] }}
+			</td>
+			<td>
+				{% if x["codVotoPratico"] == 'N' %}
+				orale
+				{% endif %}
+				{% if x["codVotoPratico"] == 'S' %}
+				scritto
+				{% endif %}
+				{% if x["codVotoPratico"] == 'P' %}
+				pratico
+				{% endif %}
+			</td>
+			<td>
+				{{ x["desProva"] }}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+
+</html>

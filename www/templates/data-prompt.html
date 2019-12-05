@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>REGISTRO - compiti settimana</title>
+</head>
+
+<body>
+	<big>COMPITI ASSEGNATI UNA DATA</big>
+
+	<br>
+	<a href="../voti" target="_self">voti</a>
+	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a>
+	<a href="../compiti-asse-sett" target="_self">compiti ass. la sett. scorsa</a>
+	<a href="../update" target="_self">update</a>
+	<br>
+
+	<form action="http://127.0.0.1:5000/data-prompt/" method="POST">
+		<p>Data <input type="text" name="data_assegnati" /></p>
+		<p><input type="submit" value="submit" /></p>
+	</form>
+
+</body>
+
+</html>
