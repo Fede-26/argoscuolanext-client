@@ -13,8 +13,8 @@ app = Flask(__name__)
 #app.debug = True		#uncomment to develop using debug
 
 paths = {
-	"credenziali": "../credenziali.pickle",
-	"dati": "../dati.pickle"
+	"credenziali": "../dati/credenziali.pickle",
+	"dati": "../dati/dati.pickle"
 }
 
 

@@ -7,8 +7,8 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 paths = {
-	"credenziali": "credenziali.pickle",
-	"dati": "dati.pickle"
+	"credenziali": "../dati/credenziali.pickle",
+	"dati": "../dati/dati.pickle"
 }
 
 
@@ -128,6 +128,7 @@ cosa hai fatto (O)ggi,
 (C)ompiti, (CS)compiti sett. scorsa,
 (P)romemoria
 (UP)date,
+(del-all)
 (99)exit,
 [DEBUG: add R for raw output]... """).lower()
 		print()
@@ -163,9 +164,16 @@ cosa hai fatto (O)ggi,
 			update_dati()
 			get_dati()
 
+		elif what_view == 'del-all':
+			os.remove(paths["dati"])
+			os.remove(paths["credenziali"])
+			exit()
+
 		elif what_view == '99':
 			exit()
 
+		else:
+			print()
 
 if __name__ == '__main__':
 	main()
