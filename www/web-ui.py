@@ -2,6 +2,7 @@
 #web ui for the client
 
 import datetime
+import os
 import argoscuolanext as argo
 import pickle
 import pprint
@@ -41,7 +42,7 @@ def get_dati():
 	try:
 		with open(paths["dati"], 'rb') as handle:
 			all_dati = pickle.load(handle)
-		return all_dati[0], all_dati[1], all_dati[2]
+		return all_dati[0], all_dati[1], all_dati[2], all_dati[3]
 
 	except FileNotFoundError:
 		update_dati()
@@ -49,22 +50,32 @@ def get_dati():
 
 
 def update_dati():
-
 	credenziali = get_credentials()
 	session = argo.Session(credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
+
 	all_dati = [
 		session.oggi(),
 		session.votigiornalieri(),
-		session.compiti()
+		session.compiti(),
+		session.promemoria()
 	]
 
+	try:
+		os.remove(paths["dati"])
+	except FileNotFoundError:
+		pass
 	with open(paths["dati"], 'wb') as handle:
 		pickle.dump(all_dati, handle)
 
 
-dati_oggi, dati_voti, dati_compiti = get_dati()
+dati_oggi, dati_voti, dati_compiti, dati_promemoria = get_dati()
 
 #BEGIN FLASK
+
+@app.route('/')
+def page_default():
+	return redirect('/cosa-successo-oggi/')
+
 
 @app.route('/voti/')
 def page_voti():
@@ -99,6 +110,12 @@ def page_data_prompt():
 	return render_template('data-prompt.html')
 
 
+@app.route('/promemoria/')
+def promemoria():
+	oggi = str(datetime.date.today())
+	return render_template('promemoria.html', raw = dati_promemoria, oggi = oggi)
+
+
 @app.route('/update/')
 def page_update():
 	update_dati()
@@ -106,4 +123,4 @@ def page_update():
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug = True)
