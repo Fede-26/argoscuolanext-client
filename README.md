@@ -17,7 +17,6 @@ Il token di autenticazione e i servizi restful invocati mediante esso, possono e
 
 ## Per utilizzarlo via web (WIP)
 
-`cd www `
-`python3 web-ui.py`
+`cd www ; python3 web-ui.py`
 
 ### Questo programma è stato reso possibile da: [hearot/ArgoScuolaNext-Python](https://github.com/hearot/ArgoScuolaNext-Python)
