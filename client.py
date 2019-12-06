@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import datetime
+import os
 import argoscuolanext as argo
 import pickle
 import pprint
@@ -35,7 +36,7 @@ def get_dati():
 	try:
 		with open(paths["dati"], 'rb') as handle:
 			all_dati = pickle.load(handle)
-		return all_dati[0], all_dati[1], all_dati[2]
+		return all_dati[0], all_dati[1], all_dati[2], all_dati[3]
 
 	except FileNotFoundError:
 		update_dati()
@@ -43,17 +44,20 @@ def get_dati():
 
 
 def update_dati():
-
 	credenziali = get_credentials()
-
 	session = argo.Session(credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
 
 	all_dati = [
 		session.oggi(),
 		session.votigiornalieri(),
-		session.compiti()
+		session.compiti(),
+		session.promemoria()
 	]
 
+	try:
+		os.remove(paths["dati"])
+	except FileNotFoundError:
+		pass
 	with open(paths["dati"], 'wb') as handle:
 		pickle.dump(all_dati, handle)
 
@@ -106,40 +110,54 @@ def compiti_asse_sett(raw):		#compiti assegnati fino a 7 giorni prima
 				print(x["datGiorno"], "-", (x["desMateria"].lower()).capitalize(), ": ", x["desCompiti"], "\n")
 
 
+def promemoria(raw):
+	oggi = datetime.date.today()
+	for x in raw["dati"]:
+		if x["datGiorno"] >= str(oggi):
+			print(x["datGiorno"] + " :  " + x["desAnnotazioni"])
+
+
 def main():
-	dati_oggi, dati_voti, dati_compiti = get_dati()
-	looping = False
+	dati_oggi, dati_voti, dati_compiti, dati_promemoria = get_dati()
 
 	while 1:
-		what_view = input("\n\nCosa vuoi vedere? (V)oti, cosa hai fatto (O)ggi, (C)ompiti, (CS)compiti sett. scorsa, (UP)date, (99)exit, [DEBUG: add R for raw output]... ").lower()
+		what_view = input(
+"""\n\nCosa vuoi vedere?
+(V)oti,
+cosa hai fatto (O)ggi,
+(C)ompiti, (CS)compiti sett. scorsa,
+(P)romemoria
+(UP)date,
+(99)exit,
+[DEBUG: add R for raw output]... """).lower()
 		print()
 
 		if what_view == 'v':
 			voti(dati_voti)
 
 		elif what_view == 'vr':
-			voti_raw = dati_voti
-			pp.pprint(voti_raw)
+			pp.pprint(dati_voti)
 
 		elif what_view == 'o':
-			oggi_raw = dati_oggi
-			cosa_successo_oggi(oggi_raw)
+			cosa_successo_oggi(dati_oggi)
 
 		elif what_view == 'or':
-			oggi_raw = dati_oggi
-			pp.pprint(oggi_raw)
+			pp.pprint(dati_oggi)
 
 		elif what_view == 'c':
-			compiti_raw = dati_compiti
-			compiti_asse_dati(compiti_raw)
+			compiti_asse_dati(dati_compiti)
 
 		elif what_view == 'cr':
-			compiti_raw = dati_compiti
-			pp.pprint(compiti_raw)
+			pp.pprint(dati_compiti)
 
 		elif what_view == 'cs':
-			compiti_raw = dati_compiti
-			compiti_asse_sett(compiti_raw)
+			compiti_asse_sett(dati_compiti)
+
+		elif what_view == 'p':
+			promemoria(dati_promemoria)
+
+		elif what_view == 'pr':
+			pp.pprint(dati_promemoria)
 
 		elif what_view == 'up':
 			update_dati()

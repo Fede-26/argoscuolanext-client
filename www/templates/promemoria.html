@@ -4,37 +4,32 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'base.css') }}">
-	<title>REGISTRO - compiti settimana</title>
+	<title>REGISTRO - promemoria</title>
 </head>
 
 <body>
-	<big>COMPITI ASSEGNATI LA SETTIMANA SCORSA</big><br>
+	<big>PROMEMORIA</big><br>
 
 	<links><br>
 	<a href="../voti" target="_self">voti</a><br>
 	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a><br>
+	<a href="../compiti-asse-sett" target="_self">compiti assegnati la settimana scorsa</a><br>
 	<a href="../data-prompt" target="_self">compiti assegnati una data</a><br>
-	<a href="../promemoria" target="_self">promemoria</a><br>
 	<a href="../update" target="_self">update</a><br>
 	</links>
 
 	<table>
-		{% for data in giorni %}
 		{% for x in raw["dati"] %}
-		{% if x["datGiorno"] == data %}
+		{% if x["datGiorno"] >= oggi %}
 		<tr>
 			<td>
 				{{ x["datGiorno"] }}
 			</td>
 			<td>
-				{{ x["desMateria"].lower().capitalize() }}
-			</td>
-			<td>
-				{{ x["desCompiti"] }}
+				{{ x["desAnnotazioni"] }}
 			</td>
 		</tr>
 		{% endif %}
-		{% endfor %}
 		{% endfor %}
 	</table>
 </body>
