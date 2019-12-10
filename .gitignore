@@ -130,3 +130,5 @@ dmypy.json
 .vscode/
 
 symlink-activate.fish
+
+dati/google_client_id.json
