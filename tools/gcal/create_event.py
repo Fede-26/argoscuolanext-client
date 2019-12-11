@@ -5,7 +5,6 @@ from cal_setup import get_calendar_service
 
 
 def main():
-	# creates one hour event tomorrow 10 AM IST
 	service = get_calendar_service()
 
 	d = datetime.now().date()
@@ -15,8 +14,8 @@ def main():
 
 	event_result = service.events().insert(calendarId='vaoa144p5ftjje4tsqlrjvhr74@group.calendar.google.com',
 		body={
-			"summary": 'Automating calendar',
-			"description": 'This is a tutorial example of automating google calendar with python',
+			"summary": input("Titolo: "),
+			"description": input("Descrizione: "),
 			"start": {"dateTime": start, "timeZone": 'Europe/Rome'},
 			"end": {"dateTime": end, "timeZone": 'Europe/Rome'},
 			}
