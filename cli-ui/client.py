@@ -1,65 +1,15 @@
 #!/usr/bin/env python3
+
+# applicazione principale (avviare questa)
+
+
 import datetime
 import os
-import argoscuolanext as argo
-import pickle
+import sys
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
-
-paths = {
-	"credenziali": "credenziali.pickle",
-	"dati": "dati.pickle"
-}
-
-
-def get_credentials():
-	try:
-		with open(paths["credenziali"], 'rb') as handle:
-			cred = pickle.load(handle)
-
-	except FileNotFoundError:
-		make_new_cred = input("file con credenziali non trovato, crearne di nuove? y/N ")
-		cred = {}
-		cred["CODICE_SCUOLA"] = input("codice scuola: ")
-		cred["USERNAME"] = input("nome utente: ")
-		cred["PASSWORD"] = input("password: ")
-
-		if make_new_cred.lower() == 'y':
-			print("--ATTENZIONE: dati salvati nel file credenziali.pickle, non dare a nessuno questo file e non cancellarlo, altrimenti dovrai reimpostare le credenziali")
-			with open(paths["credenziali"], 'wb') as handle:
-				pickle.dump(cred, handle)
-
-	return cred
-
-
-def get_dati():
-	try:
-		with open(paths["dati"], 'rb') as handle:
-			all_dati = pickle.load(handle)
-		return all_dati[0], all_dati[1], all_dati[2], all_dati[3]
-
-	except FileNotFoundError:
-		update_dati()
-		return get_dati()
-
-
-def update_dati():
-	credenziali = get_credentials()
-	session = argo.Session(credenziali["CODICE_SCUOLA"], credenziali["USERNAME"], credenziali["PASSWORD"])
-
-	all_dati = [
-		session.oggi(),
-		session.votigiornalieri(),
-		session.compiti(),
-		session.promemoria()
-	]
-
-	try:
-		os.remove(paths["dati"])
-	except FileNotFoundError:
-		pass
-	with open(paths["dati"], 'wb') as handle:
-		pickle.dump(all_dati, handle)
+sys.path.append("../modules")
+import gestdati as gsd
 
 
 def voti(raw):		#tutti i voti assegnati
@@ -118,7 +68,7 @@ def promemoria(raw):
 
 
 def main():
-	dati_oggi, dati_voti, dati_compiti, dati_promemoria = get_dati()
+	dati_oggi, dati_voti, dati_compiti, dati_promemoria = gsd.get_dati()
 
 	while 1:
 		what_view = input(
@@ -128,6 +78,7 @@ cosa hai fatto (O)ggi,
 (C)ompiti, (CS)compiti sett. scorsa,
 (P)romemoria
 (UP)date,
+(del-all)
 (99)exit,
 [DEBUG: add R for raw output]... """).lower()
 		print()
@@ -145,7 +96,7 @@ cosa hai fatto (O)ggi,
 			pp.pprint(dati_oggi)
 
 		elif what_view == 'c':
-			compiti_asse_dati(dati_compiti)
+			compiti_asse_data(dati_compiti)
 
 		elif what_view == 'cr':
 			pp.pprint(dati_compiti)
@@ -160,12 +111,23 @@ cosa hai fatto (O)ggi,
 			pp.pprint(dati_promemoria)
 
 		elif what_view == 'up':
-			update_dati()
-			get_dati()
+			gsd.update_dati()
+			gsd.get_dati()
+
+		elif what_view == 'del-all':
+			try:
+				os.remove(gsd.paths["dati"])
+				os.remove(gsd.paths["credenziali"])
+				exit()
+			except FileNotFoundError:
+				print("1 or more file not found")
+				exit()
 
 		elif what_view == '99':
 			exit()
 
+		else:
+			print()
 
 if __name__ == '__main__':
 	main()
