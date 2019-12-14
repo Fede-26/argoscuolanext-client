@@ -3,16 +3,16 @@
 
 import datetime
 import os
-import sys
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
+import sys
 sys.path.append("../modules")
 import gestdati as gsd
 
 from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
-#app.debug = True		#uncomment to develop using debug
+app.debug = True		#uncomment to develop using debug
 
 
 dati_oggi, dati_voti, dati_compiti, dati_promemoria = gsd.get_dati()
@@ -65,7 +65,7 @@ def promemoria():
 
 @app.route('/update/')
 def page_update():
-	update_dati()
+	gsd.update_dati()
 	return render_template('update.html')
 
 
