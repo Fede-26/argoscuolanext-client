@@ -131,6 +131,6 @@ dmypy.json
 
 symlink-activate.fish
 
-dati/google_client_id.json
+dati/*
 
 dati/*
