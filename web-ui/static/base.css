@@ -1,5 +1,5 @@
 body {
-	background-color: #f4f0e3;
+	background-color: lightgray;
 	font-family: sans-serif;
 }
 
@@ -9,7 +9,7 @@ table {
 }
 
 th, td {
-	padding: 7px;
+	padding: 10px;
 	border: 1px solid darkgrey;
 }
 
@@ -27,7 +27,7 @@ th, td {
 .singleLink {
 	margin-left: 20px;
 	margin-right: 20px;
-	margin-top: 10px;
+	margin-top: 15px;
 	margin-bottom: 10px;
 }
 
@@ -38,11 +38,11 @@ th, td {
 	margin-bottom: 10px;
 	flex-grow: 6;
 
-	font-size: large;
+	font-size: x-large;
 }
 
 .alert {
 	text-align: center;
 	margin-top: 20%;
-	font-size: x-large;
+	font-size: xx-large;
 }
