@@ -6,9 +6,9 @@
 import datetime
 import os
 import sys
+sys.path.append("../modules")
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
-sys.path.append("../modules")
 import gestdati as gsd
 
 

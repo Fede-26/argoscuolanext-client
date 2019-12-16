@@ -13,10 +13,20 @@ Il token di autenticazione e i servizi restful invocati mediante esso, possono e
 
 ## Per utilizzarlo via linea di comando
 
+`cd cli-ui`
+
 `python3 client.py`
 
-## Per utilizzarlo via web (WIP)
+## Per utilizzarlo via web
 
-`cd www ; python3 web-ui.py`
+`cd web-ui`
+
+`python3 web-ui.py`
+
+## Per vedere le credenziali
+
+`cd tools`
+
+`python3 view-cred.py`
 
 ### Questo programma è stato reso possibile da: [hearot/ArgoScuolaNext-Python](https://github.com/hearot/ArgoScuolaNext-Python)
