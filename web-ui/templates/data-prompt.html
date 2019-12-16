@@ -8,17 +8,19 @@
 </head>
 
 <body>
-	<big>COMPITI ASSEGNATI UNA DATA</big><br>
 
-	<links><br>
-	<a href="../voti" target="_self">voti</a><br>
-	<a href="../cosa-successo-oggi" target="_self">cosa è successo oggi</a><br>
-	<a href="../compiti-asse-sett" target="_self">compiti ass. la sett. scorsa</a><br>
-	<a href="../promemoria" target="_self">promemoria</a><br>
-	<a href="../update" target="_self">update</a><br>
-	</links>
 
-	<form action="http://127.0.0.1:5000/data-prompt/" method="POST">
+	<div id="header">
+		<div id="titolo">COMPITI ASSEGNATI UNA DATA</div>
+		<div class="singleLink"> <a href="../voti" target="_self">VOTI</a> </div>
+		<div class="singleLink"> <a href="../cosa-successo-oggi" target="_self">OGGI</a> </div>
+		<div class="singleLink"> <a href="../compiti-asse-sett" target="_self">SETT. SCORSA</a> </div>
+		<div class="singleLink"> <a href="../data-prompt" target="_self">COMPITI</a> </div>
+		<div class="singleLink"> <a href="../promemoria" target="_self">PROMEMORIA</a> </div>
+		<div class="singleLink"> <a href="../update" target="_self">UPDATE</a> </div>
+	</div>
+
+	<form class="alert" action="http://127.0.0.1:5000/data-prompt/" method="POST">
 		<p>Data <input type="date" name="data_assegnati" /></p>
 		<p><input type="submit" value="submit" /></p>
 	</form>
