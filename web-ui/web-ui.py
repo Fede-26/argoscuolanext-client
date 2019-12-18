@@ -31,6 +31,7 @@ def page_voti():
 
 @app.route("/cosa-successo-oggi/")
 def page_cosa_successo_oggi():
+	print(dati_oggi)
 	return render_template("cosa-successo-oggi.html", raw = dati_oggi)
 
 
@@ -66,6 +67,7 @@ def promemoria():
 @app.route("/update/")
 def page_update():
 	gsd.update_dati()
+	gsd.get_dati()
 	return render_template("update.html")
 
 
